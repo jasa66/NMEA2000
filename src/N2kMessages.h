@@ -4537,6 +4537,109 @@ inline void SetN2kAISClassAStatic(tN2kMsg &N2kMsg, uint8_t MessageID, tN2kAISRep
 }
 
 /************************************************************************//**
+ * \brief Settin up the PGN 129793 "AIS UTC and Date Report"
+ *        NOTE: THIS MESSAGE MIGHT CONTAIN ERRORS
+ *        See: https://canboat.github.io/canboat/canboat.html PGN 129793
+ * 
+ * \ingroup group_msgParsers
+ * 
+ * This parameter group provides data associated with the ITU-R M.1371 
+ * Message 5 Ship Static and Voyage Related Data Message. An AIS device
+ * may generate this parameter group either upon receiving a VHF data link
+ * message 5, or upon receipt of an ISO or NMEA request PGN.
+ * 
+ * \sa [ITU-R M.1371](https://www.itu.int/rec/R-REC-M.1371)
+ * 
+ * \param N2kMsg        Reference to a N2kMsg Object, 
+ *                      Output: NMEA2000 message ready to be send.
+ * \param MessageID       Message Type ID according to e ITU-R M.1371
+ * \param Repeat          Repeat indicator, Used by the repeater to indicate
+ *                        how many times a message has been repeated.  
+ *                        see \ref tN2kAISRepeat
+ * \param UserID          MMSI Number
+ * \param Latitude        latitude of position degree
+ * \param Longitude       longitude of position degree
+ * \param Accuracy      {bool}   position accuracy 
+ *                          - 0 = default
+ *                          - 1 = high (≤10 m)
+ *                          - 0 = low (>10 m)
+ * \param RAIM          {bool}Receiver autonomous integrity monitoring (RAIM) flag of
+ *                          electronic position fixing device
+ *                          - 0 = RAIM not in use = default
+ *                          - 1 = RAIM in use
+ * \param PositionTime  Seconds since midnight. Time of day
+ * \param State         Communication State Selector Flag
+ *                        - 0 = SOTDMA communication state follows
+ *                        - 1 = ITDMA communication state follows
+ *                        (always “1” for Class-B “CS”)
+ * \param AISTransceiverInformation  see \ref tN2kAISTransceiverInformation
+ * \param Date          Date of UTC
+ * \param GNSStype      GNSS type. See \ref tN2kGNSStype
+ *
+ * 
+ */
+void SetN2kPGN129793(tN2kMsg &N2kMsg, uint8_t &MessageID, tN2kAISRepeat &Repeat, uint32_t &UserID,
+  double &Latitude, double &Longitude, bool &Accuracy, bool &RAIM, uint32_t &PositionTime,
+  bool &State, tN2kAISTransceiverInformation &AISTransceiverInformation, 
+  uint16_t &Date, tN2kGNSStype &GNSStype);     
+
+/************************************************************************//**
+ * \brief Parsing the content of message PGN 129793 "AIS UTC and Date Report"
+ *        NOTE: THIS MESSAGE MIGHT CONTAIN ERRORS
+ *        See: https://canboat.github.io/canboat/canboat.html PGN 129793
+ * 
+ * \ingroup group_msgParsers
+ * 
+ * This parameter group provides data associated with the ITU-R M.1371 
+ * Message 5 Ship Static and Voyage Related Data Message. An AIS device
+ * may generate this parameter group either upon receiving a VHF data link
+ * message 5, or upon receipt of an ISO or NMEA request PGN.
+ * 
+ * \sa [ITU-R M.1371](https://www.itu.int/rec/R-REC-M.1371)
+ * 
+ * \param N2kMsg        Reference to a N2kMsg Object, 
+ *                      Output: NMEA2000 message ready to be send.
+ * \param MessageID       Message Type ID according to e ITU-R M.1371
+ * \param Repeat          Repeat indicator, Used by the repeater to indicate
+ *                        how many times a message has been repeated.  
+ *                        see \ref tN2kAISRepeat
+ * \param UserID          MMSI Number
+ * \param Latitude        latitude of position degree
+ * \param Longitude       longitude of position degree
+ * \param Accuracy      {bool}   position accuracy 
+ *                          - 0 = default
+ *                          - 1 = high (≤10 m)
+ *                          - 0 = low (>10 m)
+ * \param RAIM          {bool}Receiver autonomous integrity monitoring (RAIM) flag of
+ *                          electronic position fixing device
+ *                          - 0 = RAIM not in use = default
+ *                          - 1 = RAIM in use
+ * \param PositionTime  Seconds since midnight. Time of day
+ * \param State         Communication State Selector Flag
+ *                        - 0 = SOTDMA communication state follows
+ *                        - 1 = ITDMA communication state follows
+ *                        (always “1” for Class-B “CS”)
+ * \param AISTransceiverInformation  see \ref tN2kAISTransceiverInformation
+ * \param Date          Date of UTC
+ * \param GNSStype      GNSS type. See \ref tN2kGNSStype
+ *
+ * \return true     Parsing of PGN Message successful
+ * \return false    Parsing of PGN Message aborted
+ * 
+ */
+bool ParseN2kPGN129793(const tN2kMsg &N2kMsg, uint8_t &MessageID, tN2kAISRepeat &Repeat, uint32_t &UserID,
+                      double &Latitude, double &Longitude, bool &Accuracy, bool &RAIM, uint32_t &PositionTime,
+                      bool &State, tN2kAISTransceiverInformation &AISTransceiverInformation, 
+                      uint16_t &Date, tN2kGNSStype &GNSStype);             
+
+
+
+
+
+
+
+
+/************************************************************************//**
  * \brief Parsing the content of message PGN 129794 "AIS static data class A"
  * \ingroup group_msgParsers
  * 
