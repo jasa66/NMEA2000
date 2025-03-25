@@ -2243,3 +2243,40 @@ bool ParseN2kPGN130577(const tN2kMsg &N2kMsg,
   return true;
 }
 
+bool ParseN2kPGN130578(const tN2kMsg &N2kMsg,
+      double &LongitudalSpeedWaterRef,
+      double &TraverseSpeedWaterRef,
+      double &LongitudalSpeedGroundRef,
+      double &TraverseSpeedGroundRef,
+      double &SternSpeedWaterRef,
+      double &SternSpeedGroundRef)
+ {
+  if (N2kMsg.PGN!=130578L) return false;
+  int Index=0;
+  LongitudalSpeedWaterRef = N2kMsg.Get2ByteUDouble(0.0001,Index);
+  TraverseSpeedWaterRef = N2kMsg.Get2ByteUDouble(0.0001,Index);
+  LongitudalSpeedGroundRef = N2kMsg.Get2ByteUDouble(0.0001,Index);
+  TraverseSpeedGroundRef = N2kMsg.Get2ByteUDouble(0.0001,Index);
+  SternSpeedWaterRef = N2kMsg.Get2ByteUDouble(0.0001,Index);
+  SternSpeedGroundRef = N2kMsg.Get2ByteUDouble(0.0001,Index);
+  return true;
+ }
+
+ void SetN2kPGN130577(tN2kMsg &N2kMsg, 
+      double LongitudalSpeedWaterRef,
+      double TraverseSpeedWaterRef,
+      double LongitudalSpeedGroundRef, 
+      double TraverseSpeedGroundRef, 
+      double SternSpeedWaterRef, 
+      double SternSpeedGroundRef)
+{
+  N2kMsg.SetPGN(130578L);
+  N2kMsg.Priority=3;
+  N2kMsg.Add2ByteUDouble(LongitudalSpeedWaterRef,0.0001);
+  N2kMsg.Add2ByteUDouble(TraverseSpeedWaterRef,0.0001);
+  N2kMsg.Add2ByteUDouble(LongitudalSpeedGroundRef,0.0001);
+  N2kMsg.Add2ByteUDouble(TraverseSpeedGroundRef,0.0001);
+  N2kMsg.Add2ByteUDouble(SternSpeedWaterRef,0.0001);
+  N2kMsg.Add2ByteUDouble(SternSpeedGroundRef,0.0001);
+}
+

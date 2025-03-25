@@ -5935,5 +5935,42 @@ inline bool ParseN2kDirectionData(const tN2kMsg &N2kMsg,tN2kDataMode &DataMode, 
    return ParseN2kPGN130577(N2kMsg,DataMode,CogReference,SID,COG,SOG,Heading,SpeedThroughWater,Set,Drift);
 }
 
+/************************************************************************//**
+ * \brief Parsing the content of message PGN 130578 "Vessel Speed Components"
+ * \ingroup group_msgParsers
+ * 
+ * 
+ * 
+ * \param N2kMsg      Reference to a N2kMsg Object, 
+ *                    Output: NMEA2000 message ready to be send.
+ * \param LongitudalSpeedWaterRef
+ * \param TraverseSpeedWaterRef
+ * \param LongitudalSpeedGroundRef
+ * \param TraverseSpeedGroundRef
+ * \param SternSpeedWaterRef
+ * \param SternSpeedGroundRef
+ * 
+ * \return true     Parsing of PGN Message successful
+ * \return false    Parsing of PGN Message aborted
+ */
+bool ParseN2kPGN130578(const tN2kMsg &N2kMsg,double &LongitudalSpeedWaterRef,double &TraverseSpeedWaterRef,
+      double &LongitudalSpeedGroundRef,double &TraverseSpeedGroundRef,double &SternSpeedWaterRef,double &SternSpeedGroundRef);
 
+
+/************************************************************************//**
+ * \brief Setting up PGN 130578 Message "Vessel Speed Data"
+ * \ingroup group_msgSetUp
+ * 
+ * 
+ * \param N2kMsg      Reference to a N2kMsg Object, 
+ *                    Output: NMEA2000 message ready to be send.
+ * \param LongitudalSpeedWaterRef
+ * \param TraverseSpeedWaterRef
+ * \param LongitudalSpeedGroundRef
+ * \param TraverseSpeedGroundRef
+ * \param SternSpeedWaterRef
+ * \param SternSpeedGroundRef
+ */
+void SetN2kPGN130577(tN2kMsg &N2kMsg, double LongitudalSpeedWaterRef, double TraverseSpeedWaterRef,
+      double LongitudalSpeedGroundRef, double TraverseSpeedGroundRef, double SternSpeedWaterRef, double SternSpeedGroundRef);
 #endif
