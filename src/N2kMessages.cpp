@@ -357,6 +357,31 @@ bool ParseN2kPGN127252(const tN2kMsg &N2kMsg, unsigned char &SID, double &Heave,
    return true;
 }
 
+void SetN2kPGN65280(tN2kMsg &N2kMsg, const uint16_t Manufacturer, const uint8_t IndustryCode,
+  const double Heave)
+{
+  N2kMsg.SetPGN(65280L);
+  N2kMsg.Priority=3;
+  N2kMsg.Add2ByteUInt(Manufacturer);
+  N2kMsg.AddByte(IndustryCode);
+  N2kMsg.Add4ByteDouble(Heave, 0.01);
+}
+
+bool ParseN2kPGN65280(const tN2kMsg &N2kMsg, uint16_t &Manufacturer, uint8_t &IndustryCode, double &Heave)
+{
+  if (N2kMsg.PGN!=65280L) return false;
+  int Index = 0;
+  uint16_t Idbyte = N2kMsg.Get2ByteUInt(Index);
+  Manufacturer = Idbyte & 0x7ff;  // 11 lowst bits
+  if (Manufacturer != 1855L) return false;
+  IndustryCode = Idbyte >> 13; // three hight bits
+  if (IndustryCode != 4) return false;
+  Heave = N2kMsg.Get4ByteDouble(0.01, Index);
+  return true;
+}
+
+
+
 //*****************************************************************************
 // Attitude
 // Input:
