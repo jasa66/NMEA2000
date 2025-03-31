@@ -881,23 +881,6 @@ inline void SetN2kHeave(tN2kMsg &N2kMsg, unsigned char SID, double Heave,
 }
 
 /************************************************************************//**
- * \brief Setting up PGN 65280 Message "Furuno Heave"
- * \ingroup group_msgSetUp
- * 
- * Vertical displacement perpendicular to (smooth, wave-free water on)
- * the earth’s surface.
- * 
- * \param N2kMsg      Reference to a N2kMsg Object, 
- * \param Manufacturer          
- * \param IndustryCode                   
- * \param Heave       Vertical displacement perpendicular to the earth’s
- *                    surface in meters
-
- */
-void SetN2kPGN65280(tN2kMsg &N2kMsg, const uint16_t Manufacturer, const uint8_t IndustryCode,
-                  const double Heave);
-
-/************************************************************************//**
  * \brief Parsing the content of Message PGN127252 "Heave"
  * \ingroup group_msgParsers
  * 
@@ -916,25 +899,6 @@ void SetN2kPGN65280(tN2kMsg &N2kMsg, const uint16_t Manufacturer, const uint8_t 
  * 
  */
 bool ParseN2kPGN127252(const tN2kMsg &N2kMsg, unsigned char &SID, double &Heave, double &Delay, tN2kDelaySource &DelaySource);
-
-
-/************************************************************************//**
- * \brief Parsing the content of Message PGN127252 "Heave"
- * \ingroup group_msgParsers
- * 
- * Vertical displacement perpendicular to (smooth, wave-free water on)
- * the earth’s surface.
- * 
- * \param N2kMsg      Reference to a N2kMsg Object, 
- * \param Manufacturer
- * \param IndustryCode 
- * \param Heave       Vertical displacement perpendicular to the earth’s
- *                    surface in meters
- * \return true     Parsing of PGN Message successful
- * \return false    Parsing of PGN Message aborted
- * 
- */
-bool ParseN2kPGN65280(const tN2kMsg &N2kMsg, uint16_t &Manufacturer, uint8_t &IndustryCode, double &Heave);
 
 
 /************************************************************************//**
@@ -6011,3 +5975,89 @@ bool ParseN2kPGN130578(const tN2kMsg &N2kMsg,double &LongitudalSpeedWaterRef,dou
 void SetN2kPGN130577(tN2kMsg &N2kMsg, double LongitudalSpeedWaterRef, double TraverseSpeedWaterRef,
       double LongitudalSpeedGroundRef, double TraverseSpeedGroundRef, double SternSpeedWaterRef, double SternSpeedGroundRef);
 #endif
+
+/*********************************************************************************************/
+
+/************************************************************************//**
+ * \brief Setting up PGN 65280 Message "Furuno Heave"
+ * \ingroup group_msgSetUp
+ * 
+ * Vertical displacement perpendicular to (smooth, wave-free water on)
+ * the earth’s surface.
+ * 
+ * \param N2kMsg      Reference to a N2kMsg Object, 
+ * \param Manufacturer          
+ * \param IndustryCode                   
+ * \param Heave       Vertical displacement perpendicular to the earth’s
+ *                    surface in meters
+
+ */
+void SetN2kPGN65280(tN2kMsg &N2kMsg, const uint16_t Manufacturer, const uint8_t IndustryCode,
+  const double Heave);
+
+/************************************************************************//**
+* \brief Setting up PGN 130843 Message "Furuno Hel anglre rolls information"
+* \ingroup group_msgSetUp
+* 
+* 
+* \param N2kMsg      Reference to a N2kMsg Object, 
+* \param Manufacturer          
+* \param IndustryCode  
+* \param Data_a      Data A - not reverse engineered fully.
+* \param Data_b      Data B - not reverse engineered fully.                
+* \param Yaw         Yaw in radians
+* \param Pitch       Pitch in radians
+* \param Roll        Roll in radians
+* 
+
+*/
+
+
+void SetN2kPGN130843(tN2kMsg &N2kMsg, const uint16_t Manufacturer, const uint8_t IndustryCode,
+  const uint8_t Data_a, const uint8_t Data_b,
+  const double Yaw, const double Pitch, const double Roll);
+
+
+
+/************************************************************************//**
+* \brief Parsing the content of Message PGN65280 "Furuno Heave"
+* \ingroup group_msgParsers
+* 
+* Vertical displacement perpendicular to (smooth, wave-free water on)
+* the earth’s surface.
+* 
+* \param N2kMsg      Reference to a N2kMsg Object, 
+* \param Manufacturer
+* \param IndustryCode 
+* \param Heave       Vertical displacement perpendicular to the earth’s
+*                    surface in meters
+* \return true     Parsing of PGN Message successful
+* \return false    Parsing of PGN Message aborted
+* 
+*/
+bool ParseN2kPGN65280(const tN2kMsg &N2kMsg, uint16_t &Manufacturer, uint8_t &IndustryCode, double &Heave);
+
+
+/************************************************************************//**
+* \brief Parsing the content of Message PGN130843 "Furuno Heel angle roll information"
+* \ingroup group_msgParsers
+* 
+* 
+* \param N2kMsg      Reference to a N2kMsg Object, 
+* \param Manufacturer
+* \param IndustryCode 
+* \param Data_a      Data A - not reverse engineered fully.
+* \param Data_b      Data B - not reverse engineered fully.
+* \param Yaw         Yaw in radians
+* \param Pitch       Pitch in radians
+* \param Roll        Roll in radians
+*                    
+* \return true     Parsing of PGN Message successful
+* \return false    Parsing of PGN Message aborted
+* 
+*/
+bool ParseN2kPGN130843(const tN2kMsg &N2kMsg, uint16_t &Manufacturer, uint8_t &IndustryCode, 
+  uint8_t &Data_a, uint8_t &Data_b,
+  double &Yaw, double &Pitch, double &Roll);
+
+

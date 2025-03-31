@@ -357,30 +357,6 @@ bool ParseN2kPGN127252(const tN2kMsg &N2kMsg, unsigned char &SID, double &Heave,
    return true;
 }
 
-void SetN2kPGN65280(tN2kMsg &N2kMsg, const uint16_t Manufacturer, const uint8_t IndustryCode,
-  const double Heave)
-{
-  N2kMsg.SetPGN(65280L);
-  N2kMsg.Priority=3;
-  N2kMsg.Add2ByteUInt(Manufacturer);
-  N2kMsg.AddByte(IndustryCode);
-  N2kMsg.Add4ByteDouble(Heave, 0.01);
-}
-
-bool ParseN2kPGN65280(const tN2kMsg &N2kMsg, uint16_t &Manufacturer, uint8_t &IndustryCode, double &Heave)
-{
-  if (N2kMsg.PGN!=65280L) return false;
-  int Index = 0;
-  uint16_t Idbyte = N2kMsg.Get2ByteUInt(Index);
-  Manufacturer = Idbyte & 0x7ff;  // 11 lowst bits
-  if (Manufacturer != 1855L) return false;
-  IndustryCode = Idbyte >> 13; // three hight bits
-  if (IndustryCode != 4) return false;
-  Heave = N2kMsg.Get4ByteDouble(0.01, Index);
-  return true;
-}
-
-
 
 //*****************************************************************************
 // Attitude
@@ -2304,4 +2280,73 @@ bool ParseN2kPGN130578(const tN2kMsg &N2kMsg,
   N2kMsg.Add2ByteUDouble(SternSpeedWaterRef,0.0001);
   N2kMsg.Add2ByteUDouble(SternSpeedGroundRef,0.0001);
 }
+
+
+/********************************************************************************************/
+// FURUNO propri messages
+
+void SetN2kPGN65280(tN2kMsg &N2kMsg, const uint16_t Manufacturer, const uint8_t IndustryCode,
+  const double Heave)
+{
+  N2kMsg.SetPGN(65280L);
+  N2kMsg.Priority=3;
+  uint16_t Idbyte = Manufacturer & 0x7ff;   // 11 lowst bits
+  Idbyte |= (IndustryCode & 0x07) << 13;    // three hight bits
+  N2kMsg.Add2ByteUInt(Idbyte);
+  // Manufacturer code is in the first 11 bits of the first byte
+  // Industry code is in the first 3 bits of the second byte
+  N2kMsg.Add4ByteDouble(Heave, 0.001);
+}
+
+bool ParseN2kPGN65280(const tN2kMsg &N2kMsg, uint16_t &Manufacturer, uint8_t &IndustryCode, double &Heave)
+{
+  if (N2kMsg.PGN!=65280L) return false;
+  int Index = 0;
+  uint16_t Idbyte = N2kMsg.Get2ByteUInt(Index);
+  Manufacturer = Idbyte & 0x7ff;  // 11 lowst bits
+  if (Manufacturer != 1855L) return false;
+  IndustryCode = Idbyte >> 13; // three hight bits
+  if (IndustryCode != 4) return false;
+  Heave = N2kMsg.Get4ByteDouble(0.001, Index);
+  return true;
+}
+
+void SetN2kPGN130843(tN2kMsg &N2kMsg, const uint16_t Manufacturer, const uint8_t IndustryCode,
+  const uint8_t Data_a, const uint8_t Data_b,
+  const double Yaw, const double Pitch, const double Roll)
+{
+  N2kMsg.SetPGN(130843L);
+  N2kMsg.Priority=3;
+  uint16_t Idbyte = Manufacturer & 0x7ff;   // 11 lowst bits
+  Idbyte |= (IndustryCode & 0x07) << 13;    // three hight bits
+  N2kMsg.Add2ByteUInt(Idbyte);
+  // Manufacturer code is in the first 11 bits of the first byte
+  // Industry code is in the first 3 bits of the second byte
+  N2kMsg.Add2ByteUInt(Data_a);
+  N2kMsg.Add2ByteUInt(Data_b);
+  N2kMsg.Add2ByteDouble(Yaw,0.0001);
+  N2kMsg.Add2ByteDouble(Pitch,0.0001);
+  N2kMsg.Add2ByteDouble(Roll,0.0001);
+}
+
+bool ParseN2kPGN130843(const tN2kMsg &N2kMsg, uint16_t &Manufacturer, uint8_t &IndustryCode, 
+  uint8_t &Data_a, uint8_t &Data_b,
+  double &Yaw, double &Pitch, double &Roll)
+{
+  if (N2kMsg.PGN!=130843L) return false;
+  int Index = 0;
+  uint16_t Idbyte = N2kMsg.Get2ByteUInt(Index);
+  Manufacturer = Idbyte & 0x7ff;  // 11 lowst bits
+  if (Manufacturer != 1855L) return false;
+  IndustryCode = Idbyte >> 13; // three hight bits
+  if (IndustryCode != 4) return false;
+  Data_a=N2kMsg.Get2ByteUInt(Index);
+  Data_b=N2kMsg.Get2ByteUInt(Index);
+  Yaw=N2kMsg.Get2ByteDouble(0.0001,Index);
+  Pitch=N2kMsg.Get2ByteDouble(0.0001,Index);
+  Roll=N2kMsg.Get2ByteDouble(0.0001,Index);
+
+  return true;
+}
+
 
