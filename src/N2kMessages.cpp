@@ -1686,53 +1686,6 @@ bool AppendN2kPGN129285(tN2kMsg &N2kMsg, uint16_t ID, const char* Name, double L
         return false;
     }
 }
-//*****************************************************************************
-// Set AIS UTC and Date Report
-void SetN2kPGN129793(tN2kMsg &N2kMsg, uint8_t &MessageID, tN2kAISRepeat &Repeat, uint32_t &UserID,
-  double &Latitude, double &Longitude, bool &Accuracy, bool &RAIM, uint32_t &PositionTime,
-  bool &State, tN2kAISTransceiverInformation &AISTransceiverInformation, 
-  uint16_t &Date, tN2kGNSStype &GNSStype)
-{
-  N2kMsg.SetPGN(129793L);
-  N2kMsg.Priority=7;
-  N2kMsg.AddByte((Repeat & 0x03)<<6 | (MessageID & 0x3f));
-  N2kMsg.Add4ByteUInt(UserID);
-  N2kMsg.Add4ByteDouble(Longitude, 1e-07);
-  N2kMsg.Add4ByteDouble(Latitude, 1e-07);
-  N2kMsg.AddByte((Accuracy & 0x01)<<1 | (RAIM & 0x01));
-  N2kMsg.Add4ByteUInt(PositionTime);
-  N2kMsg.AddByte((State & 0x01)<<1 | (AISTransceiverInformation & 0x1f));
-  N2kMsg.Add2ByteUInt(Date);
-  N2kMsg.AddByte((GNSStype & 0x0f)<<1);
-
-}
-
-
-//*****************************************************************************
-// AIS UTC and Date Report
-bool ParseN2kPGN129793(const tN2kMsg &N2kMsg, uint8_t &MessageID, tN2kAISRepeat &Repeat, uint32_t &UserID,
-  double &Latitude, double &Longitude, bool &Accuracy, bool &RAIM, uint32_t &PositionTime,
-  bool &State, tN2kAISTransceiverInformation &AISTransceiverInformation, 
-  uint16_t &Date, tN2kGNSStype &GNSStype)
-{
-  if (N2kMsg.PGN!=129793L) return false;
-
-  int Index=0;
-  unsigned char vb;
-
-  vb=N2kMsg.GetByte(Index); MessageID=(vb & 0x3f); Repeat=(tN2kAISRepeat)(vb>>6 & 0x03);
-  UserID=N2kMsg.Get4ByteUInt(Index);
-  Longitude=N2kMsg.Get4ByteDouble(1e-07, Index);
-  Latitude=N2kMsg.Get4ByteDouble(1e-07, Index);
-  vb=N2kMsg.GetByte(Index); Accuracy=(vb & 0x01); RAIM=(vb>>1 & 0x01);
-  PositionTime=N2kMsg.Get4ByteUInt(Index);
-  vb=N2kMsg.GetByte(Index); State=(vb & 0x01);
-  AISTransceiverInformation=(tN2kAISTransceiverInformation)(vb>>1 & 0x1f);
-  Date=N2kMsg.Get2ByteUInt(Index);
-  vb=N2kMsg.GetByte(Index); GNSStype=(tN2kGNSStype)(vb>>1 & 0x0f);
-  return true;
-  
-}
 
 //*****************************************************************************
 // AIS static data A
@@ -2283,6 +2236,55 @@ bool ParseN2kPGN130578(const tN2kMsg &N2kMsg,
 
 
 /********************************************************************************************/
+//*****************************************************************************
+// Set AIS UTC and Date Report
+void SetN2kPGN129793(tN2kMsg &N2kMsg, uint8_t &MessageID, tN2kAISRepeat &Repeat, uint32_t &UserID,
+  double &Latitude, double &Longitude, bool &Accuracy, bool &RAIM, uint32_t &PositionTime,
+  bool &State, tN2kAISTransceiverInformation &AISTransceiverInformation, 
+  uint16_t &Date, tN2kGNSStype &GNSStype)
+{
+  N2kMsg.SetPGN(129793L);
+  N2kMsg.Priority=7;
+  N2kMsg.AddByte((Repeat & 0x03)<<6 | (MessageID & 0x3f));
+  N2kMsg.Add4ByteUInt(UserID);
+  N2kMsg.Add4ByteDouble(Longitude, 1e-07);
+  N2kMsg.Add4ByteDouble(Latitude, 1e-07);
+  N2kMsg.AddByte((Accuracy & 0x01)<<1 | (RAIM & 0x01));
+  N2kMsg.Add4ByteUInt(PositionTime);
+  N2kMsg.AddByte((State & 0x01)<<1 | (AISTransceiverInformation & 0x1f));
+  N2kMsg.Add2ByteUInt(Date);
+  N2kMsg.AddByte((GNSStype & 0x0f)<<1);
+
+}
+
+
+//*****************************************************************************
+// AIS UTC and Date Report
+bool ParseN2kPGN129793(const tN2kMsg &N2kMsg, uint8_t &MessageID, tN2kAISRepeat &Repeat, uint32_t &UserID,
+  double &Latitude, double &Longitude, bool &Accuracy, bool &RAIM, uint32_t &PositionTime,
+  bool &State, tN2kAISTransceiverInformation &AISTransceiverInformation, 
+  uint16_t &Date, tN2kGNSStype &GNSStype)
+{
+  if (N2kMsg.PGN!=129793L) return false;
+
+  int Index=0;
+  unsigned char vb;
+
+  vb=N2kMsg.GetByte(Index); MessageID=(vb & 0x3f); Repeat=(tN2kAISRepeat)(vb>>6 & 0x03);
+  UserID=N2kMsg.Get4ByteUInt(Index);
+  Longitude=N2kMsg.Get4ByteDouble(1e-07, Index);
+  Latitude=N2kMsg.Get4ByteDouble(1e-07, Index);
+  vb=N2kMsg.GetByte(Index); Accuracy=(vb & 0x01); RAIM=(vb>>1 & 0x01);
+  PositionTime=N2kMsg.Get4ByteUInt(Index);
+  vb=N2kMsg.GetByte(Index); State=(vb & 0x01);
+  AISTransceiverInformation=(tN2kAISTransceiverInformation)(vb>>1 & 0x1f);
+  Date=N2kMsg.Get2ByteUInt(Index);
+  vb=N2kMsg.GetByte(Index); GNSStype=(tN2kGNSStype)(vb>>1 & 0x0f);
+  return true;
+  
+}
+
+
 // FURUNO propri messages
 
 void SetN2kPGN65280(tN2kMsg &N2kMsg, const uint16_t Manufacturer, const uint8_t IndustryCode,
