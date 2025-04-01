@@ -2336,7 +2336,10 @@ bool ParseN2kPGN130843(const tN2kMsg &N2kMsg, uint16_t &Manufacturer, uint8_t &I
   uint8_t &Data_a, uint8_t &Data_b,
   double &Yaw, double &Pitch, double &Roll)
 {
-  if (N2kMsg.PGN!=130843L) return false;
+  if (N2kMsg.PGN!=130843L) 
+  {
+    return false;
+  }
   int Index = 0;
   uint16_t Idbyte = N2kMsg.Get2ByteUInt(Index);
   GetManufacturerCode(Idbyte, Manufacturer);
