@@ -1347,4 +1347,36 @@ public:
  */
 void PrintBuf(N2kStream *port, unsigned char len, const unsigned char *pData, bool AddLF=false);
 
+/****************************************************************************************/
+/************************************************************************//**
+ * \brief Get the Manufacturer Code from the given byte
+ * 
+ * \param Idbyte        IdByte to carry manufacturer andf industry code
+ * \param Manufacturer  Manufacturer Code
+ */
+void GetManufacturerCode(const uint16_t IdByte, uint16_t &Manufacturer);
+
+/************************************************************************//**
+ * \brief Get the Industry Code from the given byte
+ * 
+ * \param Idbyte        IdByte to carry manufacturer andf industry code
+ * \param IndustryCode  IndustryCode Code
+ */
+void GetIndustryCode(const uint16_t IdByte, uint8_t &IndustryCode);
+
+/************************************************************************//**
+ * \brief Set the Manufacturer Code in the given byte
+ * 
+ * \param Idbyte        IdByte to carry manufacturer andf industry code
+ * \param Manufacturer  Manufacturer Code
+ */
+void SetManufacturerCode(uint16_t &IdByte, uint16_t Manufacturer);
+/************************************************************************//**
+ * \brief Set the Industry Code in the given byte
+ * 
+ * \param Idbyte        IdByte to carry manufacturer andf industry code
+ * \param IndustryCode  IndustryCode Code
+ */
+void SetIndustryCode(uint16_t &IdByte, uint8_t IndustryCode);
+
 #endif

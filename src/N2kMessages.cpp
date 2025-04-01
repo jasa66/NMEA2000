@@ -2290,8 +2290,9 @@ void SetN2kPGN65280(tN2kMsg &N2kMsg, const uint16_t Manufacturer, const uint8_t 
 {
   N2kMsg.SetPGN(65280L);
   N2kMsg.Priority=3;
-  uint16_t Idbyte = Manufacturer & 0x7ff;   // 11 lowst bits
-  Idbyte |= (IndustryCode & 0x07) << 13;    // three hight bits
+  uint16_t Idbyte{0}; 
+  SetManufacturerCode(Idbyte, Manufacturer);
+  SetIndustryCode(Idbyte, IndustryCode);
   N2kMsg.Add2ByteUInt(Idbyte);
   // Manufacturer code is in the first 11 bits of the first byte
   // Industry code is in the first 3 bits of the second byte
@@ -2303,9 +2304,10 @@ bool ParseN2kPGN65280(const tN2kMsg &N2kMsg, uint16_t &Manufacturer, uint8_t &In
   if (N2kMsg.PGN!=65280L) return false;
   int Index = 0;
   uint16_t Idbyte = N2kMsg.Get2ByteUInt(Index);
-  Manufacturer = Idbyte & 0x7ff;  // 11 lowst bits
+
+  GetManufacturerCode(Idbyte, Manufacturer);
   if (Manufacturer != 1855L) return false;
-  IndustryCode = Idbyte >> 13; // three hight bits
+  GetIndustryCode(Idbyte, IndustryCode);
   if (IndustryCode != 4) return false;
   Heave = N2kMsg.Get4ByteDouble(0.001, Index);
   return true;
@@ -2317,8 +2319,9 @@ void SetN2kPGN130843(tN2kMsg &N2kMsg, const uint16_t Manufacturer, const uint8_t
 {
   N2kMsg.SetPGN(130843L);
   N2kMsg.Priority=3;
-  uint16_t Idbyte = Manufacturer & 0x7ff;   // 11 lowst bits
-  Idbyte |= (IndustryCode & 0x07) << 13;    // three hight bits
+  uint16_t Idbyte{0};
+  SetManufacturerCode(Idbyte, Manufacturer);
+  SetIndustryCode(Idbyte, IndustryCode);
   N2kMsg.Add2ByteUInt(Idbyte);
   // Manufacturer code is in the first 11 bits of the first byte
   // Industry code is in the first 3 bits of the second byte
@@ -2336,10 +2339,16 @@ bool ParseN2kPGN130843(const tN2kMsg &N2kMsg, uint16_t &Manufacturer, uint8_t &I
   if (N2kMsg.PGN!=130843L) return false;
   int Index = 0;
   uint16_t Idbyte = N2kMsg.Get2ByteUInt(Index);
-  Manufacturer = Idbyte & 0x7ff;  // 11 lowst bits
-  if (Manufacturer != 1855L) return false;
-  IndustryCode = Idbyte >> 13; // three hight bits
-  if (IndustryCode != 4) return false;
+  GetManufacturerCode(Idbyte, Manufacturer);
+  if (Manufacturer != 1855L) 
+  {
+    return false;
+  }
+  GetIndustryCode(Idbyte, IndustryCode);
+  if (IndustryCode != 4) 
+  {
+    return false;
+  }
   Data_a=N2kMsg.Get2ByteUInt(Index);
   Data_b=N2kMsg.Get2ByteUInt(Index);
   Yaw=N2kMsg.Get2ByteDouble(0.0001,Index);

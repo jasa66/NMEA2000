@@ -937,3 +937,28 @@ void tN2kMsg::SendInActisenseFormat(N2kStream *port) const {
     //PrintBuf(msgIdx,ActisenseMsgBuf);
     //Serial.print("\r\n");
 }
+
+/*********************************************************************************/
+void GetManufacturerCode(const uint16_t IdByte, uint16_t &Manufacturer)
+{
+  Manufacturer = IdByte & 0x7ff;   // 11 lowst bits
+}
+
+void GetIndustryCode(const uint16_t IdByte, uint8_t &IndustryCode)
+{
+  IndustryCode = (IdByte >> 13); // three highst bits
+}
+
+void SetManufacturerCode(uint16_t &IdByte, const uint16_t Manufacturer)
+{
+  IdByte = (Manufacturer & 0x7ff); // set 11 lowst bits
+
+}
+void SetIndustryCode(uint16_t &IdByte, const uint8_t IndustryCode)
+{
+  //IdByte &= 0x1FFF; // clear three highst bits
+  IdByte |= (IndustryCode & 0x07) << 13; // set three highst bits
+}
+
+//uint16_t Idbyte = Manufacturer & 0x7ff;   // 11 lowst bits
+//Idbyte |= (IndustryCode & 0x07) << 13;    // three hight bits
