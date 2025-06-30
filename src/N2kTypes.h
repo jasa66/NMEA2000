@@ -100,6 +100,73 @@ enum tN2kXTEMode  {
                             N2kxtem_Manual=4          ///< manual mode
                           };
 
+
+/*************************************************************************//**
+ * \enum  tN2kAISShipType {
+
+ * \brief Enumeration of vessel types according to PGN129040
+ * \ref https://canboat.github.io/canboat/canboat.html#lookup-SHIP_TYPE
+ * 
+ */  
+enum tN2kAISShipType {
+                            N2kaisshiptype_NotAvailable=0,  ///< ship type not available
+                            N2kaisshiptype_WingInGround=20,  ///< wing in ground ship
+                            N2kaisshiptype_WingInGroundCatX=21,  ///< wing in ground ship
+                            N2kaisshiptype_WingInGroundCatY=22,  ///< wing in ground ship
+                            N2kaisshiptype_WingInGroundCatZ=23,  ///< wing in ground ship
+                            N2kaisshiptype_WingInGroundCatOS=24,  ///< wing in ground ship
+                            N2kaisshiptype_Fishing = 30,///< fishing vessel
+                            N2kaisshiptype_Towing = 31,///< towing vessel
+                            N2kaisshiptype_TowingExceeds200mOrWiderThan25m = 32,///< towing vessel exceeds 200m or wider than 25m
+                            N2kaisshiptype_EngagedInDredgingOrUnderwaterOperations = 33,///< engaged in dredging or underwater operations
+                            N2kaisshiptype_EngagedInDivingOperations = 34,///< engaged in diving operations
+                            N2kaisshiptype_Military = 35,///< engaged in military operations
+                            N2kaisshiptype_Sailing = 36,///< sailing vessel
+                            N2kaisshiptype_PleasureCraft = 37,///< pleasure craft
+                            N2kaisshiptype_HighSpeedCraft = 40,///< high speed craft
+                            N2kaisshiptype_HighSpeedCraftCatX = 41,///< high speed craft (hazard cat X)
+                            N2kaisshiptype_HighSpeedCraftCatY = 42,///< high speed craft (hazard cat Y)
+                            N2kaisshiptype_HighSpeedCraftCatZ = 43,///< high speed craft (hazard cat Z)
+                            N2kaisshiptype_HighSpeedCraftCatOS = 44,///< high speed craft (hazard cat OS)
+                            N2kaisshiptype_HighSpeedCraftNoAdditionalInformation = 49,///< high speed craft (no additional information)
+                            N2kaisshiptype_PilotVessel = 50,///< pilot vessel
+                            N2kaisshiptype_SAR = 51,///< search and rescue vessel
+                            N2kaisshiptype_Tug = 52,///< tug vessel
+                            N2kaisshiptype_PortTender = 53,///< port tender vessel
+                            N2kaisshiptype_AntiPollution = 54,///< anti-pollution vessel
+                            N2kaisshiptype_LawEnforcement = 55,///< law enforcement vessel
+                            N2kaisshiptype_Spare = 56,///< spare vessel
+                            N2kaisshiptype_Spare2 = 57,///< spare vessel #2   
+                            N2kaisshiptype_Medical = 58,///< medical vessel
+                            N2kaisshiptype_ShipsAndAircraftOfStatesNotPartiesToAnArmedConflict = 59,///< ships and aircraft of states not parties to an armed conflict
+                            N2kaisshiptype_PassengerShip = 60,///< passenger ship
+                            N2kaisshiptype_PassengerShipCatX = 61,///< passenger ship (hazard cat X)
+                            N2kaisshiptype_PassengerShipCatY = 62,///< passenger ship (hazard cat Y)
+                            N2kaisshiptype_PassengerShipCatZ = 63,///< passenger ship (hazard cat Z)
+                            N2kaisshiptype_PassengerShipCatOS = 64,///< passenger ship (hazard cat OS)
+                            N2kaisshiptype_PassengerShipNoAdditionalInformation = 69,///< passenger ship (no additional information)
+                            N2kaisshiptype_CargoShip = 70,///< cargo ship
+                            N2kaisshiptype_CargoShipCatX = 71,///< cargo ship (hazard cat X)
+                            N2kaisshiptype_CargoShipCatY = 72,///< cargo ship (hazard cat Y)
+                            N2kaisshiptype_CargoShipCatZ = 73,///< cargo ship (hazard cat Z)
+                            N2kaisshiptype_CargoShipCatOS = 74,///< cargo ship (hazard cat OS)
+                            N2kaisshiptype_CargoShipNoAdditionalInformation = 79,///< cargo ship (no additional information)
+                            N2kaisshiptype_Tanker = 80,///< tanker
+                            N2kaisshiptype_TankerCatX = 81,///< tanker (hazard cat X)
+                            N2kaisshiptype_TankerCatY = 82,///< tanker (hazard cat Y)
+                            N2kaisshiptype_TankerCatZ = 83,///< tanker (hazard cat Z)
+                            N2kaisshiptype_TankerCatOS = 84,///<  tanker (hazard cat OS)
+                            N2kaisshiptype_TankerNoAdditionalInformation = 89,///< tanker (no additional information)
+                            N2kaisshiptype_Other = 90,///< other ship
+                            N2kaisshiptype_OtherCatX = 91,///< other ship (hazard cat X)
+                            N2kaisshiptype_OtherCatY = 92,///< other ship (hazard cat Y)
+                            N2kaisshiptype_OtherCatZ = 93,///< other ship (hazard cat Z)
+                            N2kaisshiptype_OtherCatOS = 94,///< other ship (hazard cat OS)
+                            N2kaisshiptype_OtherNoAdditionalInformation = 99 ///< other ship (no additional information)
+                          };
+
+
+
 /*************************************************************************//**
  * \enum  tN2kGNSStype
  * \brief Enumeration of the GPS system which is in use according to PGN129029,

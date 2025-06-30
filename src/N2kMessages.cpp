@@ -1518,6 +1518,93 @@ bool ParseN2kPGN129039(const tN2kMsg &N2kMsg, uint8_t &MessageID, tN2kAISRepeat 
 }
 
 //*****************************************************************************
+// AIS porision extended Report (PGN 129040)
+void SetN2kPGN129040(tN2kMsg &N2kMsg, const uint8_t &MessageID, const tN2kAISRepeat &Repeat, const uint32_t &UserID,
+                        const double &Latitude, const double &Longitude, const bool &Accuracy, const bool &RAIM,
+                        const uint8_t &Seconds, const double &COG, const double &SOG, const tN2kAISShipType &TypeOfShip, 
+                        const double &TrueHeading, const tN2kGNSStype &GNSStype,
+                        const double &Length, const double &Beam, const double &PositionReferenceStarboard, 
+                        const double &PositionReferenceTrueBow, const char *Name, const bool &DTE, 
+                        const tN2kAISMode &AISMode, const tN2kAISTransceiverInformation &AISTransInfo, 
+                        const unsigned char &SID=0xff)
+{
+    N2kMsg.SetPGN(129040L);
+    N2kMsg.Priority=4;
+    N2kMsg.AddByte((Repeat & 0x03)<<6 | (MessageID & 0x3f));
+    N2kMsg.Add4ByteUInt(UserID);
+    N2kMsg.Add4ByteDouble(Longitude, 1e-07);
+    N2kMsg.Add4ByteDouble(Latitude, 1e-07);
+    N2kMsg.AddByte((Seconds & 0x3f)<<2 | (RAIM & 0x01)<<1 | (Accuracy & 0x01));
+    N2kMsg.Add2ByteUDouble(COG, 0.0001);
+    N2kMsg.Add2ByteUDouble(SOG, 0.01);
+    N2kMsg.AddByte(0xff); // Regional app stuff 8bits
+    N2kMsg.AddByte(0xff); // Regional app b stuff 8bits
+    N2kMsg.AddByte(TypeOfShip); // 8 bits
+    N2kMsg.Add2ByteUDouble(TrueHeading, 0.0001); // 0.0001 degrees
+    N2kMsg.AddByte((0x0f << 4) | (GNSStype & 0x0f)); // 4b reserved, 4b GNSS
+    N2kMsg.Add2ByteUDouble(Length, 0.1); // 0.1 meters
+    N2kMsg.Add2ByteUDouble(Beam, 0.1); // 0.1 meters
+    N2kMsg.Add2ByteUDouble(PositionReferenceStarboard, 0.1); // 0.1 meters
+    N2kMsg.Add2ByteUDouble(PositionReferenceTrueBow, 0.1); // 0.1 meters
+    N2kMsg.AddVarStr(Name); // Name of the ship, max 160 characters
+    uint16_t packed{0};
+    uint8_t Spare1{0xff};
+    uint8_t Spare2{0xff}; 
+    packed |= (DTE & 0x01) << 15;
+    packed |= (AISMode & 0x01) << 14;
+    packed |= (Spare1 & 0x0F) << 10;
+    packed |= (AISTransInfo & 0x1F) << 5;
+    packed |= (Spare2 & 0x1F);  // 5 bits
+    N2kMsg.AddByte((packed >> 8) & 0xff); // high byte
+    N2kMsg.AddByte(packed & 0xff);       // low byte
+    N2kMsg.AddByte(SID);
+}
+
+
+bool ParseN2kPGN129040(const tN2kMsg &N2kMsg, uint8_t &MessageID, tN2kAISRepeat &Repeat, uint32_t &UserID,
+                        double &Latitude, double &Longitude, bool &Accuracy, bool &RAIM,
+                        uint8_t &Seconds, double &COG, double &SOG, tN2kAISShipType &TypeOfShip, double &TrueHeading, tN2kGNSStype &GNSStype,
+                        double &Length, double &Beam, double &PositionReferenceStarboard, double &PositionReferenceTrueBow,
+                        char *Name, bool &DTE, tN2kAISMode &AISMode, tN2kAISTransceiverInformation &AISTransInfo, unsigned char &SID)
+{
+    if (N2kMsg.PGN!=129040L) return false;
+    int Index=0;
+    unsigned char vb;
+    vb=N2kMsg.GetByte(Index); MessageID=(vb & 0x3f); Repeat=(tN2kAISRepeat)(vb>>6 & 0x03);
+    UserID=N2kMsg.Get4ByteUInt(Index);
+    Longitude=N2kMsg.Get4ByteDouble(1e-07, Index);
+    Latitude=N2kMsg.Get4ByteDouble(1e-07, Index);
+    vb=N2kMsg.GetByte(Index); Accuracy=(vb & 0x01); RAIM=(vb>>1 & 0x01); Seconds=(vb>>2 & 0x3f);
+    COG=N2kMsg.Get2ByteUDouble(1e-04, Index);
+    SOG=N2kMsg.Get2ByteUDouble(0.01, Index);
+    vb=N2kMsg.GetByte(Index); // Regional app stuff 8bits
+    vb=N2kMsg.GetByte(Index); // Reserved 8 bits
+    TypeOfShip=(tN2kAISShipType)N2kMsg.GetByte(Index); // 8 bits
+    TrueHeading=N2kMsg.Get2ByteUDouble(1e-07, Index); // 0.0001 degrees
+    vb = N2kMsg.GetByte(Index);
+    GNSStype = (tN2kGNSStype)(vb & 0x0f); 
+    N2kMsg.GetByte(Index); // Reserved 4 bits
+    Length=N2kMsg.Get2ByteUDouble(0.1, Index); // 0.1 meters
+    Beam=N2kMsg.Get2ByteUDouble(0.1, Index); // 0.1 meters
+    PositionReferenceStarboard=N2kMsg.Get2ByteUDouble(0.1, Index); // 0.1 meters
+    PositionReferenceTrueBow=N2kMsg.Get2ByteUDouble(0.1, Index); // 0.1 meters
+    size_t NameSize = sizeof(Name);
+    N2kMsg.GetVarStr(NameSize, (char*)&Name, Index); 
+
+    uint8_t high = N2kMsg.GetByte(Index);
+    uint8_t low = N2kMsg.GetByte(Index);
+    uint16_t word = (high << 8) | low;
+
+    DTE = (word >> 15) & 0x01;
+    AISMode = (tN2kAISMode)((word >> 14) & 0x01);
+    uint8_t pare1 = (word >> 10) & 0x0F;
+    AISTransInfo = (tN2kAISTransceiverInformation)((word >> 5) & 0x1F);
+    uint8_t Spare2 = word & 0x1F;
+    SID=N2kMsg.GetByte(Index); // 8 bits
+}
+
+
+//*****************************************************************************
 // AIS Aids to Navigation (AtoN) Report (PGN 129041)
 void SetN2kPGN129041(tN2kMsg &N2kMsg, const tN2kAISAtoNReportData &N2kData) {
     N2kMsg.SetPGN(129041L);
