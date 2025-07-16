@@ -1526,7 +1526,7 @@ void SetN2kPGN129040(tN2kMsg &N2kMsg, const uint8_t &MessageID, const tN2kAISRep
                         const double &Length, const double &Beam, const double &PositionReferenceStarboard, 
                         const double &PositionReferenceTrueBow, const char *Name, const bool &DTE, 
                         const tN2kAISMode &AISMode, const tN2kAISTransceiverInformation &AISTransInfo, 
-                        const unsigned char &SID=0xff)
+                        const unsigned char &SID)
 {
     N2kMsg.SetPGN(129040L);
     N2kMsg.Priority=4;
@@ -1597,9 +1597,9 @@ bool ParseN2kPGN129040(const tN2kMsg &N2kMsg, uint8_t &MessageID, tN2kAISRepeat 
 
     DTE = (word >> 15) & 0x01;
     AISMode = (tN2kAISMode)((word >> 14) & 0x01);
-    uint8_t pare1 = (word >> 10) & 0x0F;
+    (word >> 10) & 0x0F;
     AISTransInfo = (tN2kAISTransceiverInformation)((word >> 5) & 0x1F);
-    uint8_t Spare2 = word & 0x1F;
+    word & 0x1F;
     SID=N2kMsg.GetByte(Index); // 8 bits
 }
 
