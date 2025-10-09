@@ -2446,11 +2446,10 @@ bool ParseN2kPGN130843(const tN2kMsg &N2kMsg, uint16_t &Manufacturer, uint8_t &I
     return false;
   }
   Data_a=N2kMsg.Get2ByteUInt(Index);
-  Data_b=N2kMsg.Get2ByteUInt(Index);
-  Yaw=N2kMsg.Get2ByteDouble(0.0001,Index);
-  Pitch=N2kMsg.Get2ByteDouble(0.0001,Index);
+  //Data_b=N2kMsg.GetByte(Index);
   Roll=N2kMsg.Get2ByteDouble(0.0001,Index);
-
+  Pitch=N2kMsg.Get2ByteDouble(0.0001,Index);
+  Yaw=N2kMsg.Get2ByteDouble(0.0001,Index);
   return true;
 }
 
