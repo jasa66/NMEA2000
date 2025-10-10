@@ -2418,8 +2418,8 @@ void SetN2kPGN130843(tN2kMsg &N2kMsg, const uint16_t Manufacturer, const uint8_t
   N2kMsg.Add2ByteUInt(Idbyte);
   // Manufacturer code is in the first 11 bits of the first byte
   // Industry code is in the first 3 bits of the second byte
-  N2kMsg.Add2ByteUInt(Data_a);
-  N2kMsg.Add2ByteUInt(Data_b);
+  N2kMsg.AddByte(Data_a);
+  N2kMsg.AddByte(Data_b);
   N2kMsg.Add2ByteDouble(Yaw,0.0001);
   N2kMsg.Add2ByteDouble(Pitch,0.0001);
   N2kMsg.Add2ByteDouble(Roll,0.0001);
@@ -2445,11 +2445,11 @@ bool ParseN2kPGN130843(const tN2kMsg &N2kMsg, uint16_t &Manufacturer, uint8_t &I
   {
     return false;
   }
-  Data_a=N2kMsg.Get2ByteUInt(Index);
-  //Data_b=N2kMsg.GetByte(Index);
+  Data_a=N2kMsg.GetByte(Index);
+  Data_b=N2kMsg.GetByte(Index);
+  Yaw=N2kMsg.Get2ByteDouble(0.0001,Index);
   Roll=N2kMsg.Get2ByteDouble(0.0001,Index);
   Pitch=N2kMsg.Get2ByteDouble(0.0001,Index);
-  Yaw=N2kMsg.Get2ByteDouble(0.0001,Index);
   return true;
 }
 
