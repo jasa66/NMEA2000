@@ -29,11 +29,11 @@ OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
 #if defined(N2kDeviceList_HANDLE_IN_DEBUG)
 #define DebugStream Serial
-# define N2kHandleInDbg(fmt, args...)     DebugStream.print (fmt , ## args)
-# define N2kHandleInDbgln(fmt, args...)   DebugStream.println (fmt , ## args)
+# define N2kHandleInDbg(...)     DebugStream.print(__VA_ARGS__)
+# define N2kHandleInDbgln(...)   DebugStream.println(__VA_ARGS__)
 #else
-# define N2kHandleInDbg(fmt, args...)
-# define N2kHandleInDbgln(fmt, args...)
+# define N2kHandleInDbg(...)
+# define N2kHandleInDbgln(...)
 #endif
 
 //*****************************************************************************

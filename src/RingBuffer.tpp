@@ -39,21 +39,21 @@
 #endif
 
 #if defined(RING_BUFFER_ERROR_DEBUG)
-  # define RingBufferErrDbgf(fmt, args...)   DebugStream.printf (fmt , ## args)
+  # define RingBufferErrDbgf(...)   DebugStream.printf(__VA_ARGS__)
 #else
-  # define RingBufferErrDbgf(fmt, args...)
+  # define RingBufferErrDbgf(...)
 #endif
 
 #if defined(RING_BUFFER_DEBUG)
-  # define RingBufferDbgf(fmt, args...)   DebugStream.printf (fmt , ## args)
+  # define RingBufferDbgf(...)   DebugStream.printf(__VA_ARGS__)
 #else
-  # define RingBufferDbgf(fmt, args...)
+  # define RingBufferDbgf(...)
 #endif
 
 #if defined(RING_BUFFER_INIT_DEBUG)
-  # define RingBufferInitDbgf(fmt, args...)   DebugStream.printf (fmt , ## args)
+  # define RingBufferInitDbgf(...)   DebugStream.printf(__VA_ARGS__)
 #else
-  # define RingBufferInitDbgf(fmt, args...)
+  # define RingBufferInitDbgf(...)
 #endif
 
 

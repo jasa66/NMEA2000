@@ -25,6 +25,7 @@
 #include <string.h>
 #include <ctype.h>
 #include <stdlib.h>
+#include <string>
 #include "Seasmart.h"
 
 /* Some private helper functions to generate hex-serialized NMEA messages */
@@ -110,11 +111,8 @@ static bool readNHexByte(const char *s, unsigned int n, uint32_t &value) {
     }
   }
 
-  char sNumber[2*n + 1];
-  strncpy(sNumber, s, sizeof(sNumber));
-  sNumber[sizeof(sNumber) - 1] = 0;
-
-  value = strtol(sNumber, 0, 16);
+  std::string sNumber(s, 2*n);
+  value = strtol(sNumber.c_str(), 0, 16);
   return true;
 }
 

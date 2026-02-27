@@ -41,53 +41,53 @@ OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 // #define NMEA2000_DEBUG
 
 #if defined(NMEA2000_FRAME_ERROR_DEBUG)
-# define N2kFrameErrDbgStart(fmt, args...) DebugStream.print(N2kMillis()); DebugStream.print(": "); DebugStream.print (fmt , ## args)
-# define N2kFrameErrDbg(fmt, args...)     DebugStream.print (fmt , ## args)
-# define N2kFrameErrDbgln(fmt, args...)   DebugStream.println (fmt , ## args)
+# define N2kFrameErrDbgStart(...) DebugStream.print(N2kMillis()); DebugStream.print(": "); DebugStream.print(__VA_ARGS__)
+# define N2kFrameErrDbg(...)     DebugStream.print(__VA_ARGS__)
+# define N2kFrameErrDbgln(...)   DebugStream.println(__VA_ARGS__)
 #else
-# define N2kFrameErrDbgStart(fmt, args...)
-# define N2kFrameErrDbg(fmt, args...)
-# define N2kFrameErrDbgln(fmt, args...)
+# define N2kFrameErrDbgStart(...)
+# define N2kFrameErrDbg(...)
+# define N2kFrameErrDbgln(...)
 #endif
 
 #if defined(NMEA2000_FRAME_IN_DEBUG)
-# define N2kFrameInDbgStart(fmt, args...) DebugStream.print(N2kMillis()); DebugStream.print(": "); DebugStream.print (fmt , ## args)
-# define N2kFrameInDbg(fmt, args...)     DebugStream.print (fmt , ## args)
-# define N2kFrameInDbgln(fmt, args...)   DebugStream.println (fmt , ## args)
+# define N2kFrameInDbgStart(...) DebugStream.print(N2kMillis()); DebugStream.print(": "); DebugStream.print(__VA_ARGS__)
+# define N2kFrameInDbg(...)     DebugStream.print(__VA_ARGS__)
+# define N2kFrameInDbgln(...)   DebugStream.println(__VA_ARGS__)
 #else
-# define N2kFrameInDbgStart(fmt, args...)
-# define N2kFrameInDbg(fmt, args...)
-# define N2kFrameInDbgln(fmt, args...)
+# define N2kFrameInDbgStart(...)
+# define N2kFrameInDbg(...)
+# define N2kFrameInDbgln(...)
 #endif
 
 #if defined(NMEA2000_FRAME_OUT_DEBUG)
-# define N2kFrameOutDbgStart(fmt, args...) DebugStream.print(N2kMillis()); DebugStream.print(": "); DebugStream.print (fmt , ## args)
-# define N2kFrameOutDbg(fmt, args...)     DebugStream.print (fmt , ## args)
-# define N2kFrameOutDbgln(fmt, args...)   DebugStream.println (fmt , ## args)
+# define N2kFrameOutDbgStart(...) DebugStream.print(N2kMillis()); DebugStream.print(": "); DebugStream.print(__VA_ARGS__)
+# define N2kFrameOutDbg(...)     DebugStream.print(__VA_ARGS__)
+# define N2kFrameOutDbgln(...)   DebugStream.println(__VA_ARGS__)
 #else
-# define N2kFrameOutDbgStart(fmt, args...)
-# define N2kFrameOutDbg(fmt, args...)
-# define N2kFrameOutDbgln(fmt, args...)
+# define N2kFrameOutDbgStart(...)
+# define N2kFrameOutDbg(...)
+# define N2kFrameOutDbgln(...)
 #endif
 
 #if defined(NMEA2000_MSG_TX_DEBUG)
-# define N2kMsgDbgStart(fmt, args...) DebugStream.print(N2kMillis()); DebugStream.print(": "); DebugStream.print (fmt , ## args)
-# define N2kMsgDbg(fmt, args...)     DebugStream.print (fmt , ## args)
-# define N2kMsgDbgln(fmt, args...)   DebugStream.println (fmt , ## args)
+# define N2kMsgDbgStart(...) DebugStream.print(N2kMillis()); DebugStream.print(": "); DebugStream.print(__VA_ARGS__)
+# define N2kMsgDbg(...)     DebugStream.print(__VA_ARGS__)
+# define N2kMsgDbgln(...)   DebugStream.println(__VA_ARGS__)
 #else
-# define N2kMsgDbgStart(fmt, args...)
-# define N2kMsgDbg(fmt, args...)
-# define N2kMsgDbgln(fmt, args...)
+# define N2kMsgDbgStart(...)
+# define N2kMsgDbg(...)
+# define N2kMsgDbgln(...)
 #endif
 
 #if defined(NMEA2000_MSG_RX_DEBUG)
-# define N2kMsgRxDbgStart(fmt, args...) DebugStream.print(N2kMillis()); DebugStream.print(": "); DebugStream.print (fmt , ## args)
-# define N2kMsgRxDbg(fmt, args...)     DebugStream.print (fmt , ## args)
-# define N2kMsgRxDbgln(fmt, args...)   DebugStream.println (fmt , ## args)
+# define N2kMsgRxDbgStart(...) DebugStream.print(N2kMillis()); DebugStream.print(": "); DebugStream.print(__VA_ARGS__)
+# define N2kMsgRxDbg(...)     DebugStream.print(__VA_ARGS__)
+# define N2kMsgRxDbgln(...)   DebugStream.println(__VA_ARGS__)
 #else
-# define N2kMsgRxDbgStart(fmt, args...)
-# define N2kMsgRxDbg(fmt, args...)
-# define N2kMsgRxDbgln(fmt, args...)
+# define N2kMsgRxDbgStart(...)
+# define N2kMsgRxDbg(...)
+# define N2kMsgRxDbgln(...)
 #endif
 
 #if defined(NMEA2000_BUF_DEBUG)
@@ -97,11 +97,11 @@ OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 #endif
 
 #if defined(NMEA2000_DEBUG)
-# define N2kDbg(fmt, args...)     DebugStream.print (fmt , ## args)
-# define N2kDbgln(fmt, args...)   DebugStream.println (fmt , ## args)
+# define N2kDbg(...)     DebugStream.print(__VA_ARGS__)
+# define N2kDbgln(...)   DebugStream.println(__VA_ARGS__)
 #else
-# define N2kDbg(fmt, args...)
-# define N2kDbgln(fmt, args...)
+# define N2kDbg(...)
+# define N2kDbgln(...)
 #endif
 
 // #define NMEA2000_MEMORY_TEST 1

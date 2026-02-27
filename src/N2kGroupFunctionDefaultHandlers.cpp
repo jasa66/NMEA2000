@@ -22,6 +22,7 @@ OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 */
 
 #include <string.h>
+#include <array>
 #include "N2kGroupFunctionDefaultHandlers.h"
 #include "NMEA2000.h"
 
@@ -288,9 +289,9 @@ bool tN2kGroupFunctionHandlerForPGN126996::HandleRequest(const tN2kMsg &N2kMsg,
     uint8_t field;
     tN2kGroupFunctionParameterErrorCode FieldErrorCode;
     bool FoundInvalidField=false;
-    size_t strSize=Max_N2kProductInfoStrLen;
-    char Query[strSize];
-    char CurVal[strSize];
+    constexpr size_t strSize=Max_N2kProductInfoStrLen;
+    std::array<char, strSize> Query;
+    std::array<char, strSize> CurVal;
 
     StartParseRequestPairParameters(N2kMsg,Index);
     // Next read new field values. Note that if message is not broadcast, we need to parse all fields always.
@@ -305,24 +306,24 @@ bool tN2kGroupFunctionHandlerForPGN126996::HandleRequest(const tN2kMsg &N2kMsg,
             MatchRequestField(N2kMsg.Get2ByteUInt(Index),(uint16_t)pNMEA2000->GetProductCode(iDev),(uint16_t)0xffff,MatchFilter,FieldErrorCode);
             break;
           case N2kPGN126996_ManufacturersModelID_field:
-            N2kMsg.GetStr(strSize,Query,Max_N2kModelID_len,0xff,Index);
-            pNMEA2000->GetModelID(CurVal,strSize,iDev);
-            MatchRequestField(Query,CurVal,MatchFilter,FieldErrorCode);
+            N2kMsg.GetStr(strSize,Query.data(),Max_N2kModelID_len,0xff,Index);
+            pNMEA2000->GetModelID(CurVal.data(),strSize,iDev);
+            MatchRequestField(Query.data(),CurVal.data(),MatchFilter,FieldErrorCode);
             break;
           case N2kPGN126996_ManufacturersSoftwareVersionCode_field:
-            N2kMsg.GetStr(strSize,Query,Max_N2kSwCode_len,0xff,Index);
-            pNMEA2000->GetModelID(CurVal,strSize,iDev);
-            MatchRequestField(Query,CurVal,MatchFilter,FieldErrorCode);
+            N2kMsg.GetStr(strSize,Query.data(),Max_N2kSwCode_len,0xff,Index);
+            pNMEA2000->GetModelID(CurVal.data(),strSize,iDev);
+            MatchRequestField(Query.data(),CurVal.data(),MatchFilter,FieldErrorCode);
             break;
           case N2kPGN126996_ManufacturersModelVersion_field:
-            N2kMsg.GetStr(strSize,Query,Max_N2kModelVersion_len,0xff,Index);
-            pNMEA2000->GetModelID(CurVal,strSize,iDev);
-            MatchRequestField(Query,CurVal,MatchFilter,FieldErrorCode);
+            N2kMsg.GetStr(strSize,Query.data(),Max_N2kModelVersion_len,0xff,Index);
+            pNMEA2000->GetModelID(CurVal.data(),strSize,iDev);
+            MatchRequestField(Query.data(),CurVal.data(),MatchFilter,FieldErrorCode);
             break;
           case N2kPGN126996_ManufacturersModelSerialCode_field:
-            N2kMsg.GetStr(strSize,Query,Max_N2kModelSerialCode_len,0xff,Index);
-            pNMEA2000->GetModelID(CurVal,strSize,iDev);
-            MatchRequestField(Query,CurVal,MatchFilter,FieldErrorCode);
+            N2kMsg.GetStr(strSize,Query.data(),Max_N2kModelSerialCode_len,0xff,Index);
+            pNMEA2000->GetModelID(CurVal.data(),strSize,iDev);
+            MatchRequestField(Query.data(),CurVal.data(),MatchFilter,FieldErrorCode);
             break;
           case N2kPGN126996_NMEA2000CertificationLevel_field:
             MatchRequestField(N2kMsg.GetByte(Index),(uint8_t)pNMEA2000->GetCertificationLevel(iDev),(uint8_t)0xff,MatchFilter,FieldErrorCode);
